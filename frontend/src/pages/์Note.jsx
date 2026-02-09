@@ -63,7 +63,7 @@ if (!user)
             <li onClick={()=>{
                navigate(`/Home/${user._id}`);
             }}>ภาพรวม</li>
-            <li className="active">จดบันทึก</li>
+            <li className="active">จดfsdfdsza</li>
             <li>เงินออม</li>
             <li>รายงาน</li>
           </ul>
