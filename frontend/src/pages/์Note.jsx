@@ -84,8 +84,7 @@ if (!user)
           <header>
             <h2>ภาพรวมการเงิน</h2>
             <p>สรุปรายรับรายจ่ายของคุณ</p>
-            <P>hi</P>
-            <P>Hi</P>
+            
           </header>
 
           <section className="cards">
