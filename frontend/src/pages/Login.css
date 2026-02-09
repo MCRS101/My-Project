@@ -1,0 +1,78 @@
+/* =========================
+   Login Page – Scoped Styles
+   ========================= */
+
+.login-page {
+  background-color: #ffffff;
+}
+
+/* ---------- Layout ---------- */
+
+.login-page .h-custom-2 {
+  min-height: 75%;
+}
+
+@media (min-width: 1025px) {
+  .login-page .h-custom-2 {
+    height: auto;
+  }
+}
+
+/* ---------- Header / Icon ---------- */
+
+.login-page .bi {
+  vertical-align: middle;
+}
+
+/* ---------- Button ---------- */
+
+.login-page .btn-login {
+  width: 110px;
+  color: #000;
+  background-color: rgb(56, 175, 58);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.login-page .btn-login:hover {
+  background-color: rgb(21, 255, 0);
+  border-radius: 100px;
+  transform: scale(1.15);
+}
+
+/* ---------- Register Link ---------- */
+
+.login-page .link-Register {
+  color: rgb(1, 139, 139);
+  text-decoration: none;
+  transition: color 0.2s, font-size 0.2s;
+}
+
+.login-page .link-Register:hover {
+  color: blue;
+  font-size: 1.1em;
+}
+
+/* ---------- Form Controls ---------- */
+
+.login-page .form-control {
+  border: 2px solid #b7b7b7;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.login-page .form-control:hover {
+  transform: scale(1.01);
+}
+
+.login-page .form-control:focus {
+  border-color: #000;
+  box-shadow: none; /* เอาเงา bootstrap ออก */
+}
+
+/* ---------- Labels ---------- */
+
+.login-page .form-outline:focus-within .form-label {
+  color: #000;
+  font-weight: 600;
+}
