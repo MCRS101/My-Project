@@ -63,7 +63,7 @@ if (!user)
             <li onClick={()=>{
                navigate(`/Home/${user._id}`);
             }}>ภาพรวม</li>
-            <li className="active">จดfsdfdsza</li>
+            <li className="active">จดบันทึก</li>
             <li>เงินออม</li>
             <li>รายงาน</li>
           </ul>
@@ -84,6 +84,7 @@ if (!user)
           <header>
             <h2>ภาพรวมการเงิน</h2>
             <p>สรุปรายรับรายจ่ายของคุณ</p>
+            <p>dasdasdasasd</p>
           </header>
 
           <section className="cards">
