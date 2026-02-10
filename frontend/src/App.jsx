@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Page1 from "./pages/Page1";
 import Register from "./pages/register";
 import Note from "./pages/์Note";
+import Report from "./pages/Report";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home/:id" element={<Home />} />
         <Route path="/page1/:id" element={<Page1 />} />
+         <Route path="/report/:id" element={<Report />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>

@@ -70,7 +70,11 @@ function Page1() {
               จดบันทึก
             </li>
             <li className="active">เงินออม</li>
-            <li>รายงาน</li>
+            <li 
+            onClick={() => {
+                navigate(`/report/${user._id}`);
+              }}
+            >รายงาน</li>
           </ul>
 
           <button

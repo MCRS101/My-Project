@@ -122,7 +122,11 @@ useEffect(() => {
               navigate(`/page1/${user._id}`);
             }}
             >เงินออม</li>
-            <li>รายงาน</li>
+            <li
+            onClick={()=>{
+              navigate(`/report/${user._id}`);
+            }}
+            >รายงาน</li>
           </ul>
 
           <button

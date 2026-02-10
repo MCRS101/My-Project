@@ -1,0 +1,95 @@
+.home-page {
+  box-sizing: border-box;
+  font-family: 'Prompt', sans-serif;
+}
+
+.home-page body {
+  margin: 0;
+  background: #f1f5f9;
+}
+
+.home-page .app {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.home-page .sidebar {
+  width: 260px;
+  background: linear-gradient(to bottom, #312e81, #1e1b4b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.home-page .profile {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.home-page .avatar {
+  width: 48px;
+  height: 48px;
+  background: #facc15;
+  color: #1e1b4b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.home-page .username {
+  font-weight: 600;
+}
+
+.home-page .userid {
+  font-size: 12px;
+  color: #c7d2fe;
+}
+
+.home-page .app-title {
+  font-size: 20px;
+  margin: 10px 0 20px;
+}
+
+/* Menu */
+.home-page .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.home-page .menu li {
+  padding: 14px 16px;
+  color: #c7d2fe;
+  cursor: pointer;
+}
+
+.home-page .menu li:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.home-page .menu .active {
+  background: rgba(255,255,255,0.15);
+  border-left: 4px solid #facc15;
+  color: #facc15;
+}
+
+/* Logout */
+.home-page .logout {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #f87171;
+  background: none;
+  color: #f87171;
+  cursor: pointer;
+}
+
+.home-page .logout:hover {
+  background: rgba(248,113,113,0.15);
+}
