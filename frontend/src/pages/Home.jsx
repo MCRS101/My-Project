@@ -117,7 +117,11 @@ useEffect(() => {
               navigate(`/note/${user._id}`);
             }}>จดบันทึก</li>
             
-            <li>เงินออม</li>
+            <li
+            onClick={()=>{
+              navigate(`/page1/${user._id}`);
+            }}
+            >เงินออม</li>
             <li>รายงาน</li>
           </ul>
 

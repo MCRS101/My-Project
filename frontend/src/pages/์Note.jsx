@@ -114,7 +114,13 @@ function Note() {
               ภาพรวม
             </li>
             <li className="active">จดบันทึก</li>
-            <li>เงินออม</li>
+
+            <li
+            onClick={() => {
+                navigate(`/page1/${user._id}`);
+              }}
+              >เงินออม</li>
+
             <li>รายงาน</li>
           </ul>
 
