@@ -2,12 +2,12 @@
    NOTE (Scoped styles)
    ========================= */
 
-.note-scope .toggle-group {
+.home-page .note-scope .toggle-group {
   display: flex;
   gap: 12px;
 }
 
-.note-scope .toggle-btn {
+.home-page .note-scope .toggle-btn {
   flex: 1;
   border-radius: 14px;
   padding: 12px 0;
@@ -23,26 +23,26 @@
   text-decoration: none;
 }
 
-.note-scope .toggle-btn.active.income {
+.home-page .note-scope .toggle-btn.active.income {
   background: #e7f7ef;
   color: #15803d;
   border-color: #86efac;
   box-shadow: 0 6px 14px rgba(22, 163, 74, 0.15);
 }
 
-.note-scope .toggle-btn.active.expense {
+.home-page .note-scope .toggle-btn.active.expense {
   background: #fee2e2;
   color: #b91c1c;
   border-color: #fca5a5;
   box-shadow: 0 6px 14px rgba(220, 38, 38, 0.18);
 }
 
-.note-scope .toggle-btn:hover {
+.home-page .note-scope .toggle-btn:hover {
   transform: translateY(-1px);
 }
 
 /* === Choice cards === */
-.note-scope .choice-card {
+.home-page .note-scope .choice-card {
   width: 100%;
   border-radius: 16px;
   padding: 16px;
@@ -57,24 +57,24 @@
   outline: none;
 }
 
-.note-scope .choice-card.checked.green {
+.home-page .note-scope .choice-card.checked.green {
   background: #ecfdf5;
   border-color: #86efac;
   box-shadow: 0 8px 18px rgba(22, 163, 74, 0.18);
 }
 
-.note-scope .choice-card.checked.pink {
+.home-page .note-scope .choice-card.checked.pink {
   background: #fdf2f8;
   border-color: #f9a8d4;
   box-shadow: 0 8px 18px rgba(236, 72, 153, 0.18);
 }
 
-.note-scope .choice-card:hover {
+.home-page .note-scope .choice-card:hover {
   transform: translateY(-2px);
 }
 
 /* checkbox กลม */
-.note-scope .checkbox {
+.home-page .note-scope .checkbox {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -82,13 +82,13 @@
   display: inline-block;
 }
 
-.note-scope .checkbox.on {
+.home-page .note-scope .checkbox.on {
   background: #16a34a;
   border-color: #16a34a;
 }
 
 /* === Confirm button === */
-.note-scope .confirm-btn {
+.home-page .note-scope .confirm-btn {
   margin-top: 20px;
   width: 100%;
   padding: 16px;
@@ -104,31 +104,31 @@
   outline: none;
 }
 
-.note-scope .confirm-btn:hover {
+.home-page .note-scope .confirm-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 28px rgba(220, 38, 38, 0.45);
 }
 
-.note-scope .confirm-btn:active {
+.home-page .note-scope .confirm-btn:active {
   transform: scale(0.98);
 }
 
 
   /* ใหม่ๆ*/
 /* ===== Note Layout Center ===== */
-.note-page {
+.home-page .note-page {
   width: 100%;
   display: flex;
   justify-content: center;  /* จัดกลางแนวนอน */
   padding: 24px 16px;
 }
 
-.main {
+.home-page .main {
   width: 100%;
 }
 
 /*  Card like in reference  */
-.note-card {
+.home-page .note-card {
   width: 100%;
   max-width: 820px;
   background: #ffffff;
@@ -139,24 +139,24 @@
 }
 
 /* ===== Form spacing ===== */
-.note-row {
+.home-page .note-row {
   margin-bottom: 18px;
 }
 
-.two-col {
+.home-page .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.note-label {
+.home-page .note-label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
 }
 
 /* ===== Inputs look clean ===== */
-.note-input {
+.home-page .note-input {
   width: 100%;
   border: 1px solid #e6e9ef;
   border-radius: 12px;
@@ -165,20 +165,20 @@
   background: #fbfcff;
 }
 
-.note-input:focus {
+.home-page .note-input:focus {
   border-color: #cfd6ff;
   box-shadow: 0 0 0 3px rgba(100,120,255,0.12);
 }
 
 /* Amount big like the design */
-.note-input.amount {
+.home-page .note-input.amount {
   padding: 18px 14px;
   font-size: 28px;
   font-weight: 800;
 }
 
 /* textarea */
-.note-input.textarea {
+.home-page .note-input.textarea {
   min-height: 90px;
   resize: vertical;
 }
