@@ -116,10 +116,12 @@ function Note() {
             <li className="active">จดบันทึก</li>
 
             <li
-            onClick={() => {
+              onClick={() => {
                 navigate(`/page1/${user._id}`);
               }}
-              >เงินออม</li>
+            >
+              เงินออม
+            </li>
 
             <li>รายงาน</li>
           </ul>
@@ -136,7 +138,7 @@ function Note() {
         </nav>
 
         {/* Main */}
-        <main className="main">
+        <main className="main note-scope">
           <header className="note-header">
             <div>
               <h2>บันทึกรายการ</h2>
