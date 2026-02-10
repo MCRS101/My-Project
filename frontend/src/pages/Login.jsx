@@ -111,7 +111,7 @@ function Login() {
           {/* RIGHT */}
           <div className="col-sm-6 px-0 d-none d-sm-block">
             <img
-              src="https://scontent.fkkc2-1.fna.fbcdn.net/v/t39.30808-6/486490064_2098169630695677_3985982531870821404_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeHq9e0I8v2pfQZpRmg7DBU_Kl_9nXy-9mcqX_2dfL72Z74mUdv1-BdcljISzMpHUWRD5AFVLAUvL0BlxVO_n0zB&_nc_ohc=MqQOl3WMkuMQ7kNvwHhNlmr&_nc_oc=AdnwGGarbE9tJ9pxlW2cWbhwsjvzfm5SZNgscQU1SnHRQsHNTjuMr9w8zHrOKRwNXoo_8TB1GA1CVzaLoWSe-t0a&_nc_zt=23&_nc_ht=scontent.fkkc2-1.fna&_nc_gid=HjAdzqa-c2lXSTJDIZCcaw&oh=00_Afuu3MoagFOt6SI0fOMqBG6ij0IpelxLveKJGTGspNwiTw&oe=69844E8F"
+              src="https://cdn.fbsbx.com/v/t59.2708-21/271330525_458020032709880_580465020263411084_n.gif?_nc_cat=103&ccb=1-7&_nc_sid=cf94fc&_nc_eui2=AeGriuj62tvjrQjSRpKOMPQH2QNguzxrC8vZA2C7PGsLy7MjDArEc3rXtBHU57-x9gCWVZPU8PF4ucjLV3i_hPH1&_nc_ohc=f-BEYJarC5gQ7kNvwF1bj-2&_nc_oc=AdmEM8XiT-2uXvujqut2r9ndgcV25Ls8ZLQbutHVmckpFmbprGW_hpCUQP9_3DR0s31LwKIlNvIoIHCHYVkXqq-v&_nc_zt=7&_nc_ht=cdn.fbsbx.com&_nc_gid=NbCz5ytazHrn8MOi3dNFgA&oh=03_Q7cD4gGjb_9bXHjvQZjuegJK-k7B8ou6E-wzSWAGK925v2AlKA&oe=698D07BA"
               alt="Login"
               className="w-100 vh-100"
               style={{ objectFit: "cover", objectPosition: "left" }}
