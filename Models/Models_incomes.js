@@ -5,7 +5,7 @@ const incomeSchema = new mongoose.Schema({
     Income_Source:{type:String}, //ช่องทางที่ได้รับ
     Description:{type:String}, //ได้รับจากอะไร
     Amount:{type:String}, //จำนวนเงินที่รับ
-    Income_Date:{type:String}, //วันที่รายรับ
+    Income_Date:{type:Date}, //วันที่รายรับ
 },{ timestamps: true });
 
 module.exports = mongoose.model('income',incomeSchema);
