@@ -165,7 +165,11 @@ const onSubmit = async () => {
               เงินออม
             </li>
 
-            <li>รายงาน</li>
+            <li
+            onClick={()=>{
+              navigate(`/report/${user._id}`);
+            }}
+            >รายงาน</li>
           </ul>
 
           <button
