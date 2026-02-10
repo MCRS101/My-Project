@@ -1,108 +1,196 @@
+/* =========================
+   NOTE (Scoped styles)
+   ========================= */
 
+.note-scope .toggle-group {
+  display: flex;
+  gap: 12px;
+}
 
-.home-page{
-	display: grid;
-	grid-template-rows: 50px 5fr 1fr;
-	grid-template-columns: 1.7fr 5fr 3fr;
-	grid-template-areas: 
-	"header main main"
-	"nav main main"
-	"footer footer footer";
-	grid-gap:0em;
+.note-scope .toggle-btn {
+  flex: 1;
+  border-radius: 14px;
+  padding: 12px 0;
+  font-weight: 800;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
 
+  /* กันสไตล์ปุ่มเดิมทับ */
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.note-scope .toggle-btn.active.income {
+  background: #e7f7ef;
+  color: #15803d;
+  border-color: #86efac;
+  box-shadow: 0 6px 14px rgba(22, 163, 74, 0.15);
+}
+
+.note-scope .toggle-btn.active.expense {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.18);
+}
+
+.note-scope .toggle-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* === Choice cards === */
+.note-scope .choice-card {
+  width: 100%;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+
+  /* กันสไตล์ปุ่มเดิมทับ */
+  box-shadow: none;
+  outline: none;
+}
+
+.note-scope .choice-card.checked.green {
+  background: #ecfdf5;
+  border-color: #86efac;
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.18);
+}
+
+.note-scope .choice-card.checked.pink {
+  background: #fdf2f8;
+  border-color: #f9a8d4;
+  box-shadow: 0 8px 18px rgba(236, 72, 153, 0.18);
+}
+
+.note-scope .choice-card:hover {
+  transform: translateY(-2px);
+}
+
+/* checkbox กลม */
+.note-scope .checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  display: inline-block;
+}
+
+.note-scope .checkbox.on {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+/* === Confirm button === */
+.note-scope .confirm-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: 900;
+  border: none;
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 22px rgba(220, 38, 38, 0.35);
+  outline: none;
+}
+
+.note-scope .confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(220, 38, 38, 0.45);
+}
+
+.note-scope .confirm-btn:active {
+  transform: scale(0.98);
 }
 
 
-.home-page header div {
-	margin: 0;
-	padding: 0;
-	color: white;
-	
+  /* ใหม่ๆ*/
+/* ===== Note Layout Center ===== */
+.note-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* จัดกลางแนวนอน */
+  padding: 24px 16px;
 }
 
-.home-page header div p{
-	margin: 0;
-	padding: 0;
-	color: white;
+.main {
+  width: 100%;
 }
 
-.home-page header{
-	grid-area: header;
-	color: white;
-	background-color: rgb(34, 34, 34);
+/*  Card like in reference  */
+.note-card {
+  width: 100%;
+  max-width: 820px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 26px;
+  border: 1px solid #e9edf5;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-.home-page nav{
-	grid-area: nav;
-	background-color: rgb(35, 35, 35);
-
+/* ===== Form spacing ===== */
+.note-row {
+  margin-bottom: 18px;
 }
 
-.home-page main{
-	grid-area:main;
-	background-color: lightblue;	
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
-.home-page aside{
-	grid-area: aside;
-	background-color: orange;
+
+.note-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
-.home-page footer{
-	grid-area: footer;
-	background-color: lightgreen;
+
+/* ===== Inputs look clean ===== */
+.note-input {
+  width: 100%;
+  border: 1px solid #e6e9ef;
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  background: #fbfcff;
 }
-.home-page ul{
-	display: block;
-	margin: 0;
-	padding: 5px;
+
+.note-input:focus {
+  border-color: #cfd6ff;
+  box-shadow: 0 0 0 3px rgba(100,120,255,0.12);
 }
-.home-page ul li {
-	list-style: none;
-	display: block;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	margin-left: 10px;
-	border-radius: 10px;
-	width: 215px;
-	height: 60px;	
+
+/* Amount big like the design */
+.note-input.amount {
+  padding: 18px 14px;
+  font-size: 28px;
+  font-weight: 800;
 }
-.home-page ul .li1{
-	background-color: rgb(10, 105, 10);
+
+/* textarea */
+.note-input.textarea {
+  min-height: 90px;
+  resize: vertical;
 }
-.home-page ul li:hover{
-	background-color: rgb(72, 72, 72);
+
+/* Responsive */
+@media (max-width: 900px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .note-card {
+    padding: 18px;
+  }
 }
 
 
-.home-page ul li a{
-	text-decoration: none;
-	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-
-}
-
-.home-page ul li a:hover{
-	transition: 0.3;
-	transform: scale(1.2);
-}
-
- @media(max-width: 768px){
-	.home-page{
-		grid-template-rows: 1fr 1fr 5fr 1fr;
-		grid-template-columns: 2fr 5fr 3fr;
-		grid-template-areas: 
-		"header header header"
-		"nav nav nav"
-		"main main main"    
-		"footer footer footer";
-	}
- }
-
- @media (max-width: 480px) {
-	.home-page{
-		display: block;
-	}
-	
- }
