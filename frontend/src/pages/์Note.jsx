@@ -66,29 +66,71 @@ function Note() {
 
   const categories = type === "income" ? incomeCategories : expenseCategories;
 
-  const onSubmit = () => {
-    // TODO: ตรงนี้ค่อยเอาไปยิง API บันทึกจริง
-    // แนะนำให้ validate ก่อนส่ง
-    if (!category) return alert("กรุณาเลือกหมวดหมู่หลัก");
-    if (!amount || Number(amount) <= 0)
-      return alert("กรุณากรอกจำนวนเงินให้ถูกต้อง");
+const onSubmit = async () => {
+  if (!category) {
+    alert("กรุณาเลือกหมวดหมู่");
+    return;
+  }
 
-    const payload = {
-      userId: user._id,
-      type,
-      date,
-      category,
-      amount: Number(amount),
-      note,
-      tags: {
-        need: needChecked,
-        variable: variableChecked,
-      },
-    };
+  if (!amount || Number(amount) <= 0) {
+    alert("กรุณากรอกจำนวนเงิน");
+    return;
+  }
 
-    console.log("SAVE NOTE:", payload);
-    alert("บันทึกสำเร็จ (ตัวอย่าง) — ดู payload ใน console ได้เลย");
-  };
+  const token = localStorage.getItem("token");
+
+  try {
+    if (type === "income") {
+      // ===== รายรับ =====
+      const payload = {
+        Income_ID: user._id,
+        Income_Source: category,
+        Description: note,
+        Amount: Number(amount),
+        Income_Date: date,
+      };
+
+      await axios.post(
+        "http://localhost:5000/api/incomes",
+        payload,
+        { headers: { token } }
+      );
+
+      alert("บันทึกรายรับสำเร็จ ✅");
+
+    } else {
+      // ===== รายจ่าย =====
+      const payload = {
+        Expense_ID: user._id,
+        Expense_Name: category,
+        Description: note,
+        Amount: Number(amount),
+        Expense_Date: date,
+        tags: {
+          need: needChecked,
+          variable: variableChecked,
+        },
+      };
+
+      await axios.post(
+        "http://localhost:5000/api/expense",
+        payload,
+        { headers: { token } }
+      );
+
+      alert("บันทึกรายจ่ายสำเร็จ ✅");
+    }
+
+    // ===== reset form =====
+    setCategory("");
+    setAmount("");
+    setNote("");
+
+  } catch (err) {
+    console.error(err);
+    alert("บันทึกไม่สำเร็จ ❌");
+  }
+};
 
   return (
     <section className="home-page">
@@ -225,7 +267,8 @@ function Note() {
               </div>
 
               {/* Needs vs Wants / Fixed vs Variable */}
-              <div className="note-row two-col">
+              {type === "expense" && (
+<div className="note-row two-col">
                 <button
                   type="button"
                   className={`choice-card ${needChecked ? "checked green" : ""}`}
@@ -258,6 +301,8 @@ function Note() {
                   </div>
                 </button>
               </div>
+              )}
+              
 
               {/* ปุ่มยืนยัน */}
               <button className="confirm-btn" type="button" onClick={onSubmit}>

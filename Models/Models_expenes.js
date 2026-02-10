@@ -5,6 +5,10 @@ const expenseSchema = new mongoose.Schema({
     Expense_Name:{type:String}, //รายละเอียดหรือชื่อของรายการที่จ่าย
     Amount:{type:String}, //จำนวนเงินจ่าย
     Expense_Date:{type:Date}, //วันที่รายรับ
+     tags: {
+    need: Boolean,
+    variable: Boolean,
+  },
 },{ timestamps: true });
 
 module.exports = mongoose.model('expense',expenseSchema);
