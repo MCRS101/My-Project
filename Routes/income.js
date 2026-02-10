@@ -7,6 +7,7 @@ const { auth } = require('../Middleware/auth.js');
 //http://localhost:5000/api/income
 router.post('/incomes',create);
 router.get('/incomes/:id',list);
+router.get('/incomereport/:id',read);
 
 
 

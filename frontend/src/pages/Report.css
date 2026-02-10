@@ -93,3 +93,29 @@
 .home-page .logout:hover {
   background: rgba(248,113,113,0.15);
 }
+
+.home-page .report-paper {
+  background: white;
+  padding: 30px;
+  color: #000;
+  font-family: "TH Sarabun New", "Sarabun", sans-serif;
+  font-size: 14px;
+}
+
+.home-page .report-paper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.home-page .report-paper th,
+.home-page .report-paper td {
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+@media print {
+  .sidebar,
+  .btn {
+    display: none;
+  }
+}
