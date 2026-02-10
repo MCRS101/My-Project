@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuthTimeout from "../hooks/useAuthTimeout";
 import axios from "axios";
-import "./Home.css";
+import "./Note.css";
 
 function Note() {
   useAuthTimeout();
