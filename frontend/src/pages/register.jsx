@@ -10,7 +10,7 @@ function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone,setPhone] = useState("");
+  
 
   const createPost = async () => {
     if (password !== confirmPassword) {
@@ -19,10 +19,10 @@ function Register() {
     }
 
     try {
-      if((email == "")||(name =="")||(password=="")||(phone==""))
+      if((email == "")||(name =="")||(password==""))
         return alert("กรุณากรอกข้อมูลให้ครบ!!!");
       
-      await axios.post(baseURL, { email,name, password,phone });
+      await axios.post(baseURL, { email,name, password });
       alert("Registration successful");
       window.location.href = "/login";
     } catch (err) {
@@ -87,16 +87,7 @@ function Register() {
                   />
                   <label className="form-label" for="form3Example4cdg">Repeat your password</label>
                 </div>
-                <div data-mdb-input-init className="form-outline mb-4">
-                  <input 
-                  type="text" 
-                  id="form3Example4cdg" 
-                  className="form-control form-control-lg" 
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  />
-                  <label className="form-label" for="form3Example4cdg">เบอร์ติดต่อ</label>
-                </div>
+
               
 
                 <div className="d-flex justify-content-center">
