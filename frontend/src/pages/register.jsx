@@ -22,7 +22,7 @@ function Register() {
       if((email == "")||(name =="")||(password==""))
         return alert("กรุณากรอกข้อมูลให้ครบ!!!");
       
-      await axios.post(baseURL, { email,name, password });
+      await axios.post(baseURL, { email,name,password});
       alert("Registration successful");
       window.location.href = "/login";
     } catch (err) {
