@@ -111,7 +111,7 @@ function Login() {
           {/* RIGHT */}
           <div className="col-sm-6 px-0 d-none d-sm-block">
             <img
-              src="https://cdn.fbsbx.com/v/t59.2708-21/271330525_458020032709880_580465020263411084_n.gif?_nc_cat=103&ccb=1-7&_nc_sid=cf94fc&_nc_eui2=AeGriuj62tvjrQjSRpKOMPQH2QNguzxrC8vZA2C7PGsLy7MjDArEc3rXtBHU57-x9gCWVZPU8PF4ucjLV3i_hPH1&_nc_ohc=f-BEYJarC5gQ7kNvwF1bj-2&_nc_oc=AdmEM8XiT-2uXvujqut2r9ndgcV25Ls8ZLQbutHVmckpFmbprGW_hpCUQP9_3DR0s31LwKIlNvIoIHCHYVkXqq-v&_nc_zt=7&_nc_ht=cdn.fbsbx.com&_nc_gid=NbCz5ytazHrn8MOi3dNFgA&oh=03_Q7cD4gGjb_9bXHjvQZjuegJK-k7B8ou6E-wzSWAGK925v2AlKA&oe=698D07BA"
+              src="https://media1.tenor.com/m/UCRNd2v5sH4AAAAd/screaming-cat-cat-screaming.gif"
               alt="Login"
               className="w-100 vh-100"
               style={{ objectFit: "cover", objectPosition: "left" }}
