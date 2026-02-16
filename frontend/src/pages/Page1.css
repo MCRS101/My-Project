@@ -133,3 +133,83 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+.goal-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.goal-card {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.2s;
+  width: calc(30% - 15px);  /*  4 ใบต่อแถว */
+}
+
+.goal-card:hover {
+  transform: translateY(-3px);
+}
+
+.goal-card h3 {
+  margin: 0;
+  color: #333;
+}
+
+.goal-amount {
+  font-weight: bold;
+  color: #ff9800;
+}
+
+.goal-date {
+  font-size: 13px;
+  color: #777;
+}
+.progress-bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4caf50;
+  transition: 0.3s;
+}
+
+.btn-add {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  background: #43a047;
+}
+
+
+.btn-delete{
+  background: #ee6262;
+  color: white;
+  border: none;
+  margin: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete:hover{
+  background: #ed3939;
+}
+.Date-p{
+  font-size: 13px;
+  color: #777;
+}
