@@ -164,3 +164,7 @@
   color: #f43f5e;
 }
 
+.home-page .chart-container {
+  margin-top: 30px;
+  max-width: 400px;
+}

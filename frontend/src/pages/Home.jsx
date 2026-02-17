@@ -1,14 +1,13 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAuthTimeout from "../hooks/useAuthTimeout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Chart } from "chart.js/auto";
+import { useRef } from "react";
 
 import "./Home.css";
-
-
-
 
 function Home() {
   useAuthTimeout();
@@ -16,88 +15,110 @@ function Home() {
   const [user, setUser] = useState(null);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
+  const chartRef = useRef(null);
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
-     const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     axios
       .get(`http://localhost:5000/api/id/${id}`, {
-        headers: { token }
+        headers: { token },
       })
-      .then(res => setUser(res.data))
-      .catch(err => console.log(err));
+      .then((res) => setUser(res.data))
+      .catch((err) => console.log(err));
 
-
-
-   if (!token) {
-    window.location.href = "/login";
-    return;
+    if (!token) {
+      window.location.href = "/login";
+      return;
     }
-
   }, [id]);
 
   /*ดึง income เมื่อมี user แล้ว */
-useEffect(() => {
-  if (!user) return;
+  useEffect(() => {
+    if (!user) return;
 
-  axios
-    .get(`http://localhost:5000/api/incomes/${user._id}`)
-       .then(res => {
+    axios
+      .get(`http://localhost:5000/api/incomes/${user._id}`)
+      .then((res) => {
         console.log("income from api:", res.data); // ต้องเห็น 2 record
 
-      const sum = res.data.reduce(
-        (total, item) => total + Number(item.Amount),
-        0
-      );
+        const sum = res.data.reduce(
+          (total, item) => total + Number(item.Amount),
+          0,
+        );
 
-      console.log("sum:", sum); // ต้องได้ 102.55
-      setTotalIncome(sum);
-    })
-    .catch(err => console.log(err));
-}, [user]);
+        console.log("sum:", sum); // ต้องได้ 102.55
+        setTotalIncome(sum);
+      })
+      .catch((err) => console.log(err));
+  }, [user]);
 
   /*ดึง Expense เมื่อมี user แล้ว */
-useEffect(() => {
-  if (!user) return;
+  useEffect(() => {
+    if (!user) return;
 
-  axios
-    .get(`http://localhost:5000/api/expense/${user._id}`)
-       .then(res => {
+    axios
+      .get(`http://localhost:5000/api/expense/${user._id}`)
+      .then((res) => {
         console.log("income from api:", res.data); // ต้องเห็น 2 record
 
-      const sum = res.data.reduce(
-        (total, item) => total + Number(item.Amount),
-        0
-      );
+        const sum = res.data.reduce(
+          (total, item) => total + Number(item.Amount),
+          0,
+        );
 
-      console.log("sum:", sum); // ต้องได้ 102.55
-      setTotalExpense(sum);
-    })
-    .catch(err => console.log(err));
-}, [user]);
+        console.log("sum:", sum); // ต้องได้ 102.55
+        setTotalExpense(sum);
+      })
+      .catch((err) => console.log(err));
+  }, [user]);
 
+  useEffect(() => {
+    if (!chartRef.current) return;
+
+    const hasData = totalIncome > 0 || totalExpense > 0;
+
+    const chart = new Chart(chartRef.current, {
+      type: "pie",
+      data: {
+        labels: hasData ? ["รายรับ", "รายจ่าย"] : ["ยังไม่มีข้อมูล"],
+        datasets: [
+          {
+            data: hasData ? [totalIncome, totalExpense] : [1], // ใส่ 1 เพื่อให้มีวงกลมขึ้นมา
+            backgroundColor: hasData ? ["#28a745", "#dc3545"] : ["#cccccc"],
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+      },
+    });
+
+    return () => chart.destroy();
+  }, [totalIncome, totalExpense]);
 
   if (!user)
-  return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div
-        className="spinner-border text-warning"
-        role="status"
-        style={{ width: "5rem", height: "5rem" }}
-      >
-        <span className="visually-hidden">Loading...</span>
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div
+          className="spinner-border text-warning"
+          role="status"
+          style={{ width: "5rem", height: "5rem" }}
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
-    </div>
-  );
+    );
 
-    const totalall = totalIncome - totalExpense
-
+  const totalall = totalIncome - totalExpense;
 
   return (
- 
-   <section className="home-page">
+    <section className="home-page">
       <div className="app">
         {/* Sidebar */}
         <nav className="sidebar">
@@ -113,20 +134,28 @@ useEffect(() => {
 
           <ul className="menu">
             <li className="active">ภาพรวม</li>
-            <li onClick={()=>{
-              navigate(`/note/${user._id}`);
-            }}>จดบันทึก</li>
-            
             <li
-            onClick={()=>{
-              navigate(`/page1/${user._id}`);
-            }}
-            >เงินออม</li>
+              onClick={() => {
+                navigate(`/note/${user._id}`);
+              }}
+            >
+              จดบันทึก
+            </li>
+
             <li
-            onClick={()=>{
-              navigate(`/report/${user._id}`);
-            }}
-            >รายงาน</li>
+              onClick={() => {
+                navigate(`/page1/${user._id}`);
+              }}
+            >
+              เงินออม
+            </li>
+            <li
+              onClick={() => {
+                navigate(`/report/${user._id}`);
+              }}
+            >
+              รายงาน
+            </li>
           </ul>
 
           <button
@@ -165,6 +194,20 @@ useEffect(() => {
               <p className="value big">฿ {totalall.toLocaleString()}</p>
               {/* <span>ประหยัดได้ 36.7% 🎉</span> */}
             </div>
+
+            <div class="chart-container">
+              <div class="card">
+                <div class="card-body">
+                  {totalIncome === 0 && totalExpense === 0 ? (
+                    <p className="text-center mt-3">ยังไม่มีข้อมูลการเงิน</p>
+                  ) : (
+                    <canvas ref={chartRef}></canvas>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            
           </section>
         </main>
       </div>
@@ -174,14 +217,13 @@ useEffect(() => {
 
 export default Home;
 
+// <section className="home-content">
+//   <p>User ID: {id}</p>
 
-      // <section className="home-content">
-      //   <p>User ID: {id}</p>
-
-      //   <div className="card" style={{ width: "18rem" }}>
-      //     <div className="card-body">
-      //       <h5 className="card-title">รายรับ</h5>
-      //       <p className="card-text">รายรับ: {comein.toLocaleString()} บาท</p>
-      //     </div>
-      //   </div>       
-      // </section>
+//   <div className="card" style={{ width: "18rem" }}>
+//     <div className="card-body">
+//       <h5 className="card-title">รายรับ</h5>
+//       <p className="card-text">รายรับ: {comein.toLocaleString()} บาท</p>
+//     </div>
+//   </div>
+// </section>
