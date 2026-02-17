@@ -235,3 +235,101 @@
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99,102,241,0.18);
 }
+
+/* ===== PDF Export Layout Fix (วางล่างสุดของไฟล์) ===== */
+
+/* 1) ซ่อนปุ่ม วัน/เดือน/ปี (mode tabs) เฉพาะตอน export PDF */
+.home-page .report-paper.exporting .mode-tabs{
+  display: none !important;
+}
+
+/* 2) ทำให้ชุดวัน/เดือน/ปี เรียงเป็นแถวเดียว + ไม่ชิดกัน */
+.home-page .report-paper.exporting .date-inputs{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 14px !important;           /* ✅ เว้นวรรค */
+  flex-wrap: wrap !important;      /* ✅ กันหลุดจอ PDF ถ้าพื้นที่ไม่พอ */
+  margin: 0 !important;
+}
+
+/* 3) field ให้เป็นแบบ “วัน : xx” สวย ๆ */
+.home-page .report-paper.exporting .field{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 10px !important;
+  border: 1px solid #111 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+}
+
+/* ✅ ตัวหนังสือทึบดำ */
+.home-page .report-paper.exporting .field label{
+  font-weight: 900 !important;
+  color: #000 !important;
+  white-space: nowrap !important;
+}
+
+/* select เรียบ ๆ */
+.home-page .report-paper.exporting .field select{
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+/* 4) เปลี่ยน “แสดง” เป็น “ประเภท :” (สไตล์กล่องขวา) */
+.home-page .report-paper.exporting .type-box{
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 12px !important;
+  border: 1px solid #111 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  margin-left: 0 !important;
+}
+
+.home-page .report-paper.exporting .type-box label{
+  font-weight: 900 !important;
+  color: #000 !important;
+  white-space: nowrap !important;
+}
+
+.home-page .report-paper.exporting .type-box select{
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+/* 5) บรรทัดสรุปแบบ “วัน : …  เดือน : …  ปี : …  |  ประเภท : …” */
+.home-page .report-paper.exporting .pdf-filterline{
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 14px !important;
+
+  margin: 10px 0 14px !important;
+  padding: 10px 12px !important;
+
+  border: 1px solid #111 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+
+  font-weight: 900 !important;
+  color: #000 !important;
+}
+
+/* เส้นคั่น | ให้ทึบดำ */
+.home-page .report-paper.exporting .pdf-filterline .sep{
+  color: #000 !important;
+  font-weight: 900 !important;
+  opacity: 1 !important;
+}
+
