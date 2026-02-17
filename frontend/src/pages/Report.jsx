@@ -1,19 +1,25 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useAuthTimeout from "../hooks/useAuthTimeout";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import "./Home.css";
+import "./Report.css";
 
 function Report() {
   useAuthTimeout();
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
 
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
+  const [day, setDay] = useState(new Date().getDate());
+
+  const [mode, setMode] = useState("month"); // "day" | "month" | "year"
+  const [typeFilter, setTypeFilter] = useState("all"); // all | income | expense
+
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
@@ -32,45 +38,54 @@ function Report() {
     "ธันวาคม",
   ];
 
-  const navigate = useNavigate();
-
+  
+  // โหลด user
   useEffect(() => {
     const token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:5000/api/id/${id}`, {
-        headers: { token },
-      })
-      .then((res) => setUser(res.data))
-      .catch((err) => console.log(err));
-
     if (!token) {
       window.location.href = "/login";
       return;
     }
+
+    axios
+      .get(`http://localhost:5000/api/id/${id}`, { headers: { token } })
+      .then((res) => setUser(res.data))
+      .catch((err) => console.log(err));
   }, [id]);
 
+  // โหลดรายรับ/รายจ่ายตามโหมด (วัน/เดือน/ปี)
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const params = new URLSearchParams({
+      year: String(year),
+      month: String(month),
+    });
+
+    if (mode === "day") params.set("day", String(day));
+    if (mode === "year") params.delete("month"); // เหลือปีอย่างเดียว
 
     axios
       .get(
-        `http://localhost:5000/api/incomereport/${id}?month=${month}&year=${year}`,
+        `http://localhost:5000/api/incomereport/${id}?${params.toString()}`,
         {
           headers: { token },
         },
       )
-      .then((res) => setIncomes(res.data));
+      .then((res) => setIncomes(res.data))
+      .catch((err) => console.log(err));
 
     axios
       .get(
-        `http://localhost:5000/api/expensereport/${id}?month=${month}&year=${year}`,
-        {
-          headers: { token },
-        },
+        `http://localhost:5000/api/expensereport/${id}?${params.toString()}`,
+        { headers: { token } },
       )
-      .then((res) => setExpenses(res.data));
-  }, [month, year, id]);
+      .then((res) => setExpenses(res.data))
+      .catch((err) => console.log(err));
+  }, [mode, day, month, year, id]);
 
+  // loading
   if (!user)
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
@@ -84,6 +99,41 @@ function Report() {
       </div>
     );
 
+  // ===== helper & rows =====
+  const formatThaiDate = (date) =>
+    new Date(date).toLocaleDateString("th-TH", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+  const statementRows = [
+    ...incomes.map((i) => ({
+      _id: i._id,
+      date: i.Income_Date,
+      title: i.Income_Source,
+      type: "income",
+      income: i.Amount,
+      expense: null,
+      desc: i.Description,
+    })),
+    ...expenses.map((e) => ({
+      _id: e._id,
+      date: e.Expense_Date,
+      title: e.Expense_Name,
+      type: "expense",
+      income: null,
+      expense: e.Amount,
+      desc: e.Description,
+    })),
+  ].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  const filteredRows =
+    typeFilter === "all"
+      ? statementRows
+      : statementRows.filter((r) => r.type === typeFilter);
+
+  // ===== export pdf =====
   const exportPDF = () => {
     const element = document.getElementById("report-pdf");
 
@@ -91,8 +141,9 @@ function Report() {
       margin: 10,
       filename: `รายงาน_${thaiMonths[month - 1]}_${year + 543}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { mode: ["css", "legacy"] },
     };
 
     html2pdf().set(opt).from(element).save();
@@ -114,28 +165,9 @@ function Report() {
           <h1 className="app-title">การเงินของฉัน</h1>
 
           <ul className="menu">
-            <li
-              onClick={() => {
-                navigate(`/home/${user._id}`);
-              }}
-            >
-              ภาพรวม
-            </li>
-            <li
-              onClick={() => {
-                navigate(`/note/${user._id}`);
-              }}
-            >
-              จดบันทึก
-            </li>
-
-            <li
-              onClick={() => {
-                navigate(`/page1/${user._id}`);
-              }}
-            >
-              เงินออม
-            </li>
+            <li onClick={() => navigate(`/home/${user._id}`)}>ภาพรวม</li>
+            <li onClick={() => navigate(`/note/${user._id}`)}>จดบันทึก</li>
+            <li onClick={() => navigate(`/page1/${user._id}`)}>เงินออม</li>
             <li className="active">รายงาน</li>
           </ul>
 
@@ -155,38 +187,112 @@ function Report() {
           <button className="btn btn-primary mb-3" onClick={exportPDF}>
             บันทึกเป็น PDF
           </button>
+
           <div id="report-pdf" className="report-paper">
             <h2 className="text-center">รายงานสรุปบัญชี</h2>
+
             <p className="text-center">
-              ประจำเดือน {thaiMonths[month - 1]} {year + 543}
+              {mode === "day" &&
+                `ประจำวันที่ ${day} ${thaiMonths[month - 1]} ${year + 543}`}
+              {mode === "month" &&
+                `ประจำเดือน ${thaiMonths[month - 1]} ${year + 543}`}
+              {mode === "year" && `ประจำปี ${year + 543}`}
             </p>
 
-            {/* Financial Status */}
-            {/* ตาราง summary */}
-            {/* ตาราง statement */}
-            <div className="d-flex gap-3 mb-4">
-              <select
-                value={month}
-                onChange={(e) => setMonth(Number(e.target.value))}
-              >
-                {thaiMonths.map((name, index) => (
-                  <option key={index} value={index + 1}>
-                    {name}
-                  </option>
-                ))}
-              </select>
+            {/* Controls */}
+            <div className="report-controls">
+              {/* Left: mode + day/month/year */}
+              <div className="date-box">
+                <div className="mode-tabs">
+                  <button
+                    className={mode === "day" ? "tab active" : "tab"}
+                    onClick={() => setMode("day")}
+                    type="button"
+                  >
+                    วัน
+                  </button>
+                  <button
+                    className={mode === "month" ? "tab active" : "tab"}
+                    onClick={() => setMode("month")}
+                    type="button"
+                  >
+                    เดือน
+                  </button>
+                  <button
+                    className={mode === "year" ? "tab active" : "tab"}
+                    onClick={() => setMode("year")}
+                    type="button"
+                  >
+                    ปี
+                  </button>
+                </div>
 
-              <select
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
-              >
-                {[2024, 2025, 2026].map((y) => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
+                <div className="date-inputs">
+                  {mode === "day" && (
+                    <div className="field">
+                      <label>วัน</label>
+                      <select
+                        value={day}
+                        onChange={(e) => setDay(Number(e.target.value))}
+                      >
+                        {Array.from({ length: 31 }, (_, i) => i + 1).map(
+                          (d) => (
+                            <option key={d} value={d}>
+                              {d}
+                            </option>
+                          ),
+                        )}
+                      </select>
+                    </div>
+                  )}
+
+                  {(mode === "day" || mode === "month") && (
+                    <div className="field">
+                      <label>เดือน</label>
+                      <select
+                        value={month}
+                        onChange={(e) => setMonth(Number(e.target.value))}
+                      >
+                        {thaiMonths.map((name, index) => (
+                          <option key={index} value={index + 1}>
+                            {name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  <div className="field">
+                    <label>ปี</label>
+                    <select
+                      value={year}
+                      onChange={(e) => setYear(Number(e.target.value))}
+                    >
+                      {[2024, 2025, 2026].map((y) => (
+                        <option key={y} value={y}>
+                          {y}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: type filter */}
+              <div className="type-box">
+                <label>แสดง</label>
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                >
+                  <option value="all">ทั้งหมด</option>
+                  <option value="income">รายรับ</option>
+                  <option value="expense">รายจ่าย</option>
+                </select>
+              </div>
             </div>
+
+            {/* Table */}
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -198,26 +304,20 @@ function Report() {
                   <th>หมายเหตุ</th>
                 </tr>
               </thead>
-              <tbody>
-                {incomes.map((i) => (
-                  <tr key={i._id}>
-                    <td>{new Date(i.Income_Date).toLocaleDateString()}</td>
-                    <td>{i.Income_Source}</td>
-                    <td>รายรับ</td>
-                    <td className="text-success">{i.Amount}</td>
-                    <td>-</td>
-                    <td>{i.Description}</td>
-                  </tr>
-                ))}
 
-                {expenses.map((e) => (
-                  <tr key={e._id}>
-                    <td>{new Date(e.Expense_Date).toLocaleDateString()}</td>
-                    <td>{e.Expense_Name}</td>
-                    <td>รายจ่าย</td>
-                    <td>-</td>
-                    <td className="text-danger">{e.Amount}</td>
-                    <td>{e.Description}</td>
+              <tbody>
+                {filteredRows.map((r) => (
+                  <tr key={r._id}>
+                    <td>{formatThaiDate(r.date)}</td>
+                    <td>{r.title}</td>
+                    <td>{r.type === "income" ? "รายรับ" : "รายจ่าย"}</td>
+                    <td className="text-success">
+                      {r.income != null ? r.income : "-"}
+                    </td>
+                    <td className="text-danger">
+                      {r.expense != null ? r.expense : "-"}
+                    </td>
+                    <td>{r.desc || "-"}</td>
                   </tr>
                 ))}
               </tbody>

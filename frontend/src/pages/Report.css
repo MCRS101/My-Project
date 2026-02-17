@@ -1,6 +1,6 @@
 .home-page {
   box-sizing: border-box;
-  font-family: 'Prompt', sans-serif;
+  font-family: "Prompt", sans-serif;
 }
 
 .home-page body {
@@ -70,12 +70,12 @@
 }
 
 .home-page .menu li:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
 .home-page .menu .active {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-left: 4px solid #facc15;
   color: #facc15;
 }
@@ -91,7 +91,7 @@
 }
 
 .home-page .logout:hover {
-  background: rgba(248,113,113,0.15);
+  background: rgba(248, 113, 113, 0.15);
 }
 
 .home-page .report-paper {
@@ -118,4 +118,120 @@
   .btn {
     display: none;
   }
+
+}
+
+/* ===== Report Controls (Day/Month/Year + Type Filter) ===== */
+.home-page .report-controls{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* กล่องซ้าย: หดตามเนื้อหา */
+.home-page .date-box{
+  flex: none;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+/* ปุ่ม วัน/เดือน/ปี แบบ segmented */
+.home-page .mode-tabs{
+  display: inline-flex;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #f8fafc;
+  padding: 2px;
+}
+
+.home-page .tab{
+  border: 0;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.home-page .tab.active{
+  background: #312e81;
+  color: #fff;
+}
+
+/* ช่องเลือกวัน/เดือน/ปี */
+.home-page .date-inputs{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.home-page .field{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+
+.home-page .field label{
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.home-page .field select{
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 2px 4px;
+  font-weight: 600;
+}
+
+/* กล่องขวา: หดตามเนื้อหา + ไม่ถูกดันไปสุดขอบ */
+.home-page .type-box{
+  flex: none;
+  width: auto;
+  margin-left: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.home-page .type-box label{
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.home-page .type-box select{
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 6px 10px;
+  outline: 0;
+  background: #fff;
+}
+
+/* โฟกัสสวย ๆ */
+.home-page .field:focus-within,
+.home-page .type-box select:focus{
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.18);
 }
