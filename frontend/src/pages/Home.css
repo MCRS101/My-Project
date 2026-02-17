@@ -167,4 +167,27 @@
 .home-page .chart-container {
   margin-top: 30px;
   max-width: 400px;
+  
 }
+
+.home-page .chart-container1 {
+  margin-top: 30px;
+  width: 100%;
+  height: 290px;   /* เพิ่มความสูงตรงนี้ */
+}
+
+.home-page .chart-container1 .card {
+  height: 300px;
+}
+
+.home-page .chart-container1 .card-body {
+  height:300px;
+  position: relative;
+}
+.home-page .chart-container1 {
+  grid-column: span 2;  /* 🔥 กิน 2 ช่อง */
+}
+
+
+
+

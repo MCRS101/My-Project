@@ -15,8 +15,12 @@ function Home() {
   const [user, setUser] = useState(null);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
-  const chartRef = useRef(null);
 
+  const [incomeList, setIncomeList] = useState([]);
+  const [expenseList, setExpenseList] = useState([]);
+
+  const chartRef = useRef(null);
+  const chartLine = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +46,7 @@ function Home() {
       .get(`http://localhost:5000/api/incomes/${user._id}`)
       .then((res) => {
         console.log("income from api:", res.data); // ต้องเห็น 2 record
+        setIncomeList(res.data); // เก็บข้อมูลดิบไว้
 
         const sum = res.data.reduce(
           (total, item) => total + Number(item.Amount),
@@ -62,6 +67,7 @@ function Home() {
       .get(`http://localhost:5000/api/expense/${user._id}`)
       .then((res) => {
         console.log("income from api:", res.data); // ต้องเห็น 2 record
+        setExpenseList(res.data); // เก็บข้อมูลดิบไว้
 
         const sum = res.data.reduce(
           (total, item) => total + Number(item.Amount),
@@ -101,6 +107,75 @@ function Home() {
 
     return () => chart.destroy();
   }, [totalIncome, totalExpense]);
+
+useEffect(() => {
+  if (!chartLine.current) return;
+  if (!incomeList.length && !expenseList.length) return;
+
+  const categoryMap = {};
+
+  // 🔵 รวมรายรับตาม Income_Source
+  incomeList.forEach((item) => {
+    const category = item.Income_Source || "อื่น ๆ";
+
+    if (!categoryMap[category]) {
+      categoryMap[category] = { income: 0, expense: 0 };
+    }
+
+    categoryMap[category].income += Number(item.Amount);
+  });
+
+  // 🔴 รวมรายจ่าย (แก้ชื่อ field ให้ตรงของคุณ)
+  expenseList.forEach((item) => {
+    const category = item.Expense_Name || "อื่น ๆ";
+
+    if (!categoryMap[category]) {
+      categoryMap[category] = { income: 0, expense: 0 };
+    }
+
+    categoryMap[category].expense += Number(item.Amount);
+  });
+
+  const labels = Object.keys(categoryMap);
+
+  const incomeValues = labels.map(
+    (category) => categoryMap[category].income
+  );
+
+  const expenseValues = labels.map(
+    (category) => categoryMap[category].expense
+  );
+
+  const chart = new Chart(chartLine.current, {
+    type: "line", // 🔥 bar เหมาะกับ category มากกว่า line
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "รายรับ",
+          data: incomeValues,
+          backgroundColor: "#28a745",
+        },
+        {
+          label: "รายจ่าย",
+          data: expenseValues,
+          backgroundColor: "#dc3545",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true },
+      },
+    },
+  });
+
+  return () => chart.destroy();
+}, [incomeList, expenseList]);
+
+
 
   if (!user)
     return (
@@ -207,7 +282,28 @@ function Home() {
               </div>
             </div>
 
-            
+            <div className="chart-container1">
+              <div className="card">
+                <div className="card-body">
+                  {totalIncome === 0 && totalExpense === 0 ? (
+                    <p className="text-center mt-3">ยังไม่มีข้อมูลการเงิน</p>
+                  ) : (
+                    <canvas ref={chartLine}></canvas>
+                  )}
+                </div>
+              </div>
+            </div>
+
+             <div class="chart-container">
+              <div class="card">
+                <div class="card-body">
+                  
+                    <p className="text-center mt-3">@Ads</p>
+                  
+           
+                </div>
+              </div>
+            </div>
           </section>
         </main>
       </div>
