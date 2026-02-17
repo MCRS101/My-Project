@@ -101,7 +101,7 @@ function Report() {
 
   // ===== helper & rows =====
   const formatThaiDate = (date) =>
-    new Date(date).toLocaleDateString("th-TH", {
+    new Date(date).toLocaleDateString("en-EN", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -268,7 +268,7 @@ function Report() {
                       value={year}
                       onChange={(e) => setYear(Number(e.target.value))}
                     >
-                      {[2024, 2025, 2026].map((y) => (
+                      {[2024, 2025, 2026,2027].map((y) => (
                         <option key={y} value={y}>
                           {y}
                         </option>
