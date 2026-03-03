@@ -42,12 +42,6 @@ function Report() {
 
   const toBE = (y) => y + 543; // แสดง พ.ศ.
 
-  const typeLabel =
-    typeFilter === "all"
-      ? "ทั้งหมด"
-      : typeFilter === "income"
-        ? "รายรับ"
-        : "รายจ่าย";
 
   // โหลด user
   useEffect(() => {
@@ -136,10 +130,19 @@ function Report() {
       type: "expense",
       income: null,
       expense: e.Amount,
+      tags: e.tags,
       desc: e.Description,
+      
     })),
   ].sort((a, b) => new Date(a.date) - new Date(b.date));
 
+  const getExpenseTagLabel = (tags) => {
+    if (!tags) return "-";
+    if (tags.need) return "รายจ่ายคงที่";
+    if (tags.variable) return "รายจ่ายผันแปร";
+
+    return "-";
+  };
   const filteredRows =
     typeFilter === "all"
       ? statementRows
@@ -218,7 +221,7 @@ function Report() {
               <div className="pdf-filterline">
                 <div className="pdf-row">
                   <span>📅 วัน : {day}</span>
-                  <span>เดือน : {thaiMonths[month - 1]}</ span>
+                  <span>เดือน : {thaiMonths[month - 1]}</span>
                   <span>ปี : {year + 543}</span>
                 </div>
 
@@ -338,6 +341,7 @@ function Report() {
                   <th>ประเภท</th>
                   <th>รับ</th>
                   <th>จ่าย</th>
+                  <th>หมวดหมู่</th>
                   <th>หมายเหตุ</th>
                 </tr>
               </thead>
@@ -350,7 +354,11 @@ function Report() {
                     <td>{r.type === "income" ? "รายรับ" : "รายจ่าย"}</td>
                     <td className="text-success">{r.income ?? "-"}</td>
                     <td className="text-danger">{r.expense ?? "-"}</td>
+                     <td>
+                      {r.type === "expense" ? getExpenseTagLabel(r.tags) : "-"}
+                    </td>
                     <td>{r.desc || "-"}</td>
+                   
                   </tr>
                 ))}
               </tbody>
