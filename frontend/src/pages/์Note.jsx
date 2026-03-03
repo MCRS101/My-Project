@@ -23,9 +23,7 @@ function Note() {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
-
-  const [needChecked, setNeedChecked] = useState(true); // รายจ่ายจำเป็น
-  const [variableChecked, setVariableChecked] = useState(false); // รายจ่ายผันแปร
+  const [expenseType, setExpenseType] = useState("need");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,71 +64,65 @@ function Note() {
 
   const categories = type === "income" ? incomeCategories : expenseCategories;
 
-const onSubmit = async () => {
-  if (!category) {
-    alert("กรุณาเลือกหมวดหมู่");
-    return;
-  }
-
-  if (!amount || Number(amount) <= 0) {
-    alert("กรุณากรอกจำนวนเงิน");
-    return;
-  }
-
-  const token = localStorage.getItem("token");
-
-  try {
-    if (type === "income") {
-      // ===== รายรับ =====
-      const payload = {
-        Income_ID: user._id,
-        Income_Source: category,
-        Description: note,
-        Amount: Number(amount),
-        Income_Date: date,
-      };
-
-      await axios.post(
-        "http://localhost:5000/api/incomes",
-        payload,
-        { headers: { token } }
-      );
-
-      alert("บันทึกรายรับสำเร็จ ✅");
-
-    } else {
-      // ===== รายจ่าย =====
-      const payload = {
-        Expense_ID: user._id,
-        Expense_Name: category,
-        Description: note,
-        Amount: Number(amount),
-        Expense_Date: date,
-        tags: {
-          need: needChecked,
-          variable: variableChecked,
-        },
-      };
-
-      await axios.post(
-        "http://localhost:5000/api/expense",
-        payload,
-        { headers: { token } }
-      );
-
-      alert("บันทึกรายจ่ายสำเร็จ ✅");
+  const onSubmit = async () => {
+    if (!category) {
+      alert("กรุณาเลือกหมวดหมู่");
+      return;
     }
 
-    // ===== reset form =====
-    setCategory("");
-    setAmount("");
-    setNote("");
+    if (!amount || Number(amount) <= 0) {
+      alert("กรุณากรอกจำนวนเงิน");
+      return;
+    }
 
-  } catch (err) {
-    console.error(err);
-    alert("บันทึกไม่สำเร็จ ❌");
-  }
-};
+    const token = localStorage.getItem("token");
+
+    try {
+      if (type === "income") {
+        // ===== รายรับ =====
+        const payload = {
+          Income_ID: user._id,
+          Income_Source: category,
+          Description: note,
+          Amount: Number(amount),
+          Income_Date: date,
+        };
+
+        await axios.post("http://localhost:5000/api/incomes", payload, {
+          headers: { token },
+        });
+
+        alert("บันทึกรายรับสำเร็จ ✅");
+      } else {
+        // ===== รายจ่าย =====
+        const payload = {
+          Expense_ID: user._id,
+          Expense_Name: category,
+          Description: note,
+          Amount: Number(amount),
+          Expense_Date: date,
+          tags: {
+            need: expenseType === "need",
+            variable: expenseType === "variable",
+          },
+        };
+
+        await axios.post("http://localhost:5000/api/expense", payload, {
+          headers: { token },
+        });
+
+        alert("บันทึกรายจ่ายสำเร็จ ✅");
+      }
+
+      // ===== reset form =====
+      setCategory("");
+      setAmount("");
+      setNote("");
+    } catch (err) {
+      console.error(err);
+      alert("บันทึกไม่สำเร็จ ❌");
+    }
+  };
 
   return (
     <section className="home-page">
@@ -166,10 +158,12 @@ const onSubmit = async () => {
             </li>
 
             <li
-            onClick={()=>{
-              navigate(`/report/${user._id}`);
-            }}
-            >รายงาน</li>
+              onClick={() => {
+                navigate(`/report/${user._id}`);
+              }}
+            >
+              รายงาน
+            </li>
           </ul>
 
           <button
@@ -272,41 +266,56 @@ const onSubmit = async () => {
 
               {/* Needs vs Wants / Fixed vs Variable */}
               {type === "expense" && (
-<div className="note-row two-col">
-                <button
-                  type="button"
-                  className={`choice-card ${needChecked ? "checked green" : ""}`}
-                  onClick={() => setNeedChecked((v) => !v)}
-                >
-                  <div className="choice-left">
-                    <span className={`checkbox ${needChecked ? "on" : ""}`} />
-                    <div>
-                      <div className="choice-title">รายจ่ายจำเป็น</div>
-                      <div className="choice-sub">Needs vs Wants</div>
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className={`choice-card ${variableChecked ? "checked pink" : ""}`}
-                  onClick={() => setVariableChecked((v) => !v)}
-                >
-                  <div className="choice-left">
-                    <span
-                      className={`checkbox ${variableChecked ? "on" : ""}`}
-                    />
-                    <div>
-                      <div className="choice-title pink-text">
-                        รายจ่ายผันแปร
+                <div className="note-row two-col">
+                  <button
+                    type="button"
+                    className={`choice-card ${
+                      expenseType === "need" ? "checked green" : ""
+                    }`}
+                    onClick={() =>
+                      setExpenseType((prev) =>
+                        prev === "need" ? null : "need",
+                      )
+                    }
+                  >
+                    <div className="choice-left">
+                      <span
+                        className={`checkbox ${expenseType === "need" ? "on" : ""}`}
+                      />
+                      <div>
+                        <div className="choice-title">รายจ่ายคงที่</div>
+                        <div className="choice-sub">Fixed Cost</div>
                       </div>
-                      <div className="choice-sub">Fixed vs Variable</div>
                     </div>
-                  </div>
-                </button>
-              </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`choice-card ${
+                      expenseType === "variable" ? "checked pink" : ""
+                    }`}
+                    onClick={() =>
+                      setExpenseType((prev) =>
+                        prev === "variable" ? null : "variable",
+                      )
+                    }
+                  >
+                    <div className="choice-left">
+                      <span
+                        className={`checkbox ${
+                          expenseType === "variable" ? "on" : ""
+                        }`}
+                      />
+                      <div>
+                        <div className="choice-title pink-text">
+                          รายจ่ายผันแปร
+                        </div>
+                        <div className="choice-sub">Variable Cost</div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
               )}
-              
 
               {/* ปุ่มยืนยัน */}
               <button className="confirm-btn" type="button" onClick={onSubmit}>
