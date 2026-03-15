@@ -152,8 +152,8 @@
 
 .home-page .balance {
   grid-column: span 2;
-  background: linear-gradient(to right, #6366f1, #9333ea);
-  color: rgb(255, 255, 255);
+  background: linear-gradient(to right, #d8d8d8, #ffffff);
+  color: rgb(0, 0, 0);
 }
 
 .home-page .up {
