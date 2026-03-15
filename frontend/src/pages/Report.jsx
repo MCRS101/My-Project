@@ -129,10 +129,19 @@ function Report() {
       type: "expense",
       income: null,
       expense: e.Amount,
+      tags: e.tags,
       desc: e.Description,
+      
     })),
   ].sort((a, b) => new Date(a.date) - new Date(b.date));
 
+  const getExpenseTagLabel = (tags) => {
+    if (!tags) return "-";
+    if (tags.need) return "รายจ่ายคงที่";
+    if (tags.variable) return "รายจ่ายผันแปร";
+
+    return "-";
+  };
   const filteredRows =
     typeFilter === "all"
       ? statementRows
@@ -331,6 +340,7 @@ function Report() {
                   <th>ประเภท</th>
                   <th>รับ</th>
                   <th>จ่าย</th>
+                  <th>หมวดหมู่</th>
                   <th>หมายเหตุ</th>
                 </tr>
               </thead>
@@ -344,6 +354,7 @@ function Report() {
                     <td className="text-success">{r.income ?? "-"}</td>
                     <td className="text-danger">{r.expense ?? "-"}</td>
                     <td>{r.desc || "-"}</td>
+                   
                   </tr>
                 ))}
               </tbody>
