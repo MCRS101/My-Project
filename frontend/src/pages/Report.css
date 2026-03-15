@@ -236,14 +236,12 @@
   box-shadow: 0 0 0 3px rgba(99,102,241,0.18);
 }
 
-/* ===== PDF Export Layout Fix (วางล่างสุดของไฟล์) ===== */
 
-/* 1) ซ่อนปุ่ม วัน/เดือน/ปี (mode tabs) เฉพาะตอน export PDF */
 .home-page .report-paper.exporting .mode-tabs{
   display: none !important;
 }
 
-/* 2) ทำให้ชุดวัน/เดือน/ปี เรียงเป็นแถวเดียว + ไม่ชิดกัน */
+
 .home-page .report-paper.exporting .date-inputs{
   display: flex !important;
   flex-direction: row !important;
@@ -253,7 +251,7 @@
   margin: 0 !important;
 }
 
-/* 3) field ให้เป็นแบบ “วัน : xx” สวย ๆ */
+
 .home-page .report-paper.exporting .field{
   display: inline-flex !important;
   align-items: center !important;
@@ -281,7 +279,7 @@
   color: #000 !important;
 }
 
-/* 4) เปลี่ยน “แสดง” เป็น “ประเภท :” (สไตล์กล่องขวา) */
+
 .home-page .report-paper.exporting .type-box{
   display: inline-flex !important;
   align-items: center !important;
@@ -308,7 +306,7 @@
   color: #000 !important;
 }
 
-/* 5) บรรทัดสรุปแบบ “วัน : …  เดือน : …  ปี : …  |  ประเภท : …” */
+
 .home-page .report-paper.exporting .pdf-filterline{
   display: flex !important;
   flex-wrap: wrap !important;
@@ -332,4 +330,3 @@
   font-weight: 900 !important;
   opacity: 1 !important;
 }
-

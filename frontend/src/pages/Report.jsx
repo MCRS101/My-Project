@@ -17,8 +17,8 @@ function Report() {
   const [year, setYear] = useState(new Date().getFullYear()); // ค.ศ.
   const [day, setDay] = useState(new Date().getDate());
 
-  const [mode, setMode] = useState("month"); // "day" | "month" | "year"
-  const [typeFilter, setTypeFilter] = useState("all"); // all | income | expense
+  const [mode, setMode] = useState("month"); 
+  const [typeFilter, setTypeFilter] = useState("all"); 
 
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -41,7 +41,6 @@ function Report() {
   ];
 
   const toBE = (y) => y + 543; // แสดง พ.ศ.
-
 
   // โหลด user
   useEffect(() => {
@@ -221,8 +220,8 @@ function Report() {
               <div className="pdf-filterline">
                 <div className="pdf-row">
                   <span>📅 วัน : {day}</span>
-                  <span>เดือน : {thaiMonths[month - 1]}</span>
-                  <span>ปี : {year + 543}</span>
+                  <span> | เดือน : {thaiMonths[month - 1]}</ span>
+                  <span> | ปี : {year + 543}</span>
                 </div>
 
                 <div className="pdf-row">
@@ -354,9 +353,6 @@ function Report() {
                     <td>{r.type === "income" ? "รายรับ" : "รายจ่าย"}</td>
                     <td className="text-success">{r.income ?? "-"}</td>
                     <td className="text-danger">{r.expense ?? "-"}</td>
-                     <td>
-                      {r.type === "expense" ? getExpenseTagLabel(r.tags) : "-"}
-                    </td>
                     <td>{r.desc || "-"}</td>
                    
                   </tr>
