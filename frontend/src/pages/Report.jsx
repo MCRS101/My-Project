@@ -17,8 +17,8 @@ function Report() {
   const [year, setYear] = useState(new Date().getFullYear()); // ค.ศ.
   const [day, setDay] = useState(new Date().getDate());
 
-  const [mode, setMode] = useState("month"); // "day" | "month" | "year"
-  const [typeFilter, setTypeFilter] = useState("all"); // all | income | expense
+  const [mode, setMode] = useState("month"); 
+  const [typeFilter, setTypeFilter] = useState("all"); 
 
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -41,13 +41,6 @@ function Report() {
   ];
 
   const toBE = (y) => y + 543; // แสดง พ.ศ.
-
-  const typeLabel =
-    typeFilter === "all"
-      ? "ทั้งหมด"
-      : typeFilter === "income"
-        ? "รายรับ"
-        : "รายจ่าย";
 
   // โหลด user
   useEffect(() => {
